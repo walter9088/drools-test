@@ -1,0 +1,20 @@
+package com.firefly.drools.test
+import com.firefly.drools.test.Message;
+rule "HelloWorld"
+	no-loop true
+	when
+		$msg:Message(status==Message.HELLO,$info:info)
+	then
+		System.out.println( $info );   
+       	$msg.setInfo( "Goodbye World" );  
+       	$msg.setStatus( Message.GOODBYE );  
+       	update( $msg );   
+end
+
+rule "GoodBye"
+	when
+		$msg:Message( status == Message.GOODBYE, info != null )
+	then
+	 	System.out.println( $msg.getInfo() );
+end
+	
